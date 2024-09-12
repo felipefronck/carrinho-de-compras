@@ -45,44 +45,47 @@ if (isset($_POST['cupom'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Carrinho</title>
+
+    <link rel="stylesheet" href="style-carrinho.css">
 </head>
 
 <body>
-    <h1>Carrinho de Compras</h1>
-    <ul>
-        <?php if(count($productsInCart) <= 0): ?> 
-            Carrinho vazio!<br>
-        <?php endif; ?>
+    <div class="topo-carrinho">
+        <h1 class="titulo-carrinho">Carrinho de Compras</h1>
+        <a class="botao-retorno-loja" href="/index.php">Retorne à loja</a>
+    </div>
 
-        <br><a href="/index.php">Retorne à loja</a>
+    <?php if(count($productsInCart) <= 0): ?> 
+        <p class="carrinho-vazio">Carrinho vazio!</p>
+    <?php endif; ?>
 
-        <?php foreach($productsInCart as $product): ?>
-        <li>
-            <?php echo $product->getName()?>
-            <input type = "text" value = "<?php echo $product->getQuantity() ?>">
-            Preço: R$ <?php echo number_format($product->getPrice() * $product->getQuantity(), 2, ',','.') ?>
-            Price: US$ <?php echo number_format(($product->getPrice() / Api::returnApi())  * $product->getQuantity(), 2, ',','.'); ?>
-            <a href="?id=<?php echo $product->getId(); ?>">Remover Item</a>
-        </li>
-        <?php endforeach; ?>
-
-        <li>Total do Carrinho: US$ <?php echo number_format($cart->getTotal() / Api::returnApi(), 2, ',','.'); ?> </li>
+    <?php foreach($productsInCart as $product): ?>
+    <ul class="itens-no-carrinho">
+        <li class="item-no-carrinho"><?php echo $product->getName()?></li>
+        <li class="item-no-carrinho"><input type = "text" value = "<?php echo $product->getQuantity() ?>"></li>
+        <li class="item-no-carrinho">Preço: R$ <?php echo number_format($product->getPrice() * $product->getQuantity(), 2, ',','.') ?></li>
+        <li class="item-no-carrinho">Price: US$ <?php echo number_format/*(*/($product->getPrice() /*/ Api::returnApi()*/)  * $product->getQuantity(), 2, ',','.'/*)*/; ?></li>
+        <li class="item-no-carrinho"><a href="?id=<?php echo $product->getId(); ?>">Remover Item</a></li>
+    </ul> 
+    <?php endforeach; ?>
     
-        <form method="POST">
-            <label for="cupom">Insira o código do cupom:</label>
+    <div class="rodape-total-desconto">      
+        <form class="form-cupom" method="POST">
+            <label for="cupom">Insira o cupom de desconto:</label>
             <input type="text" name="cupom" id="cupom">
             <button type="submit">Aplicar Cupom</button>
         </form>
-            
+        
+        <p class="total-carrinho">Total do Carrinho: US$ <?php echo number_format($cart->getTotal() /*/ Api::returnApi()*/, 2, ',','.'); ?> </p><br>
+        
         <?php if ($cupomAplicado): ?>
-            <li>Desconto aplicado com o cupom: <?php echo $cupomAplicado->getCodigo(); ?></li>
-            <li>Total com desconto: US$ <?php echo number_format($valorTotal / APi::returnApi(), 2, ',', '.'); ?></li>
-        <?php endif; ?>
-    
-    
-    </ul> 
+            <div class="mensagem-pos-desconto">
+                <p>Desconto aplicado com o cupom: <?php echo $cupomAplicado->getCodigo(); ?></p>
+                <p>Total com desconto: US$ <?php echo number_format($valorTotal /*/ Api::returnApi()*/, 2, ',', '.'); ?></p>
+            </div>
+            <?php endif; ?>
+    </div>
 
 </body>
-
 </html>

@@ -27,9 +27,6 @@ if(isset($_GET['id'])){
     $cart = new Cart;
     $cart->add($product);
 }
-
-// echo '<pre>', var_dump($_SESSION['cart'] ?? []), '</pre>';
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +37,7 @@ if(isset($_GET['id'])){
     <meta name="viewport" content="width=], initial-scale=1.0">
     <title>Desafio 1 - Carrinho de Compras</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-loja.css">
 </head>
 
 <body>
